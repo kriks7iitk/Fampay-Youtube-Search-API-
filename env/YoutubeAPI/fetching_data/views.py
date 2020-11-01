@@ -3,6 +3,7 @@ import requests
 from django.conf import settings
 from isodate import parse_duration
 from django.http import JsonResponse
+import datetime
 
 
 # function to render index.html for search---------------------------------------------------------------
@@ -45,11 +46,14 @@ def refresh(request):
         for result in results:
             video_ids.append(result['id']['videoId'])
 # getting  vidoe details from video ids---------------------------
-
+        d = datetime.datetime.now();
+        d = d.isoformat('T');
+        # print(d);
         video_params = {
             'key' : settings.YOUTUBE_DATA_API_KEY,
             'part' : 'snippet,contentDetails',
-            'id' : ','.join(video_ids)
+            'id' : ','.join(video_ids),
+            'publishedAfter' : d,
         }
         r = requests.get(video_url,params = video_params)
         results = r.json()['items']
@@ -65,7 +69,7 @@ def refresh(request):
                 'url' : f'https://www.youtube.com/watch?v={ result["id"] }',
                 'description' : result['snippet']['description']
                 }
-            print(video_data)
+            # print(video_data)
             videos.append(video_data)
 
         context = {
