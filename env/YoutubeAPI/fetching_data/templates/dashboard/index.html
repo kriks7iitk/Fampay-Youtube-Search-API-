@@ -33,8 +33,8 @@
       <section class="jumbotron text-center">
         <div class="container">
           <h1 class="jumbotron-heading">Search YouTube</h1>
-          <p class="lead text-muted">Get the top nine results on YouTube for your query!</p>
-          <form method="POST">
+          <p class="lead text-muted">Get the top Fifteen results on YouTube for your query!</p>
+          <!-- <form method="POST">
             <div class="input-group mb-3">
               {% csrf_token %}
               <input type="text" name="search" class="form-control" aria-label="Username">
@@ -43,9 +43,13 @@
               <button type="submit" name="submit" value="search" class="btn btn-primary my-2">YouTube Search</button>
               <button type="submit" name="submit" value="lucky" class="btn btn-secondary my-2">I'm Feeling Lucky</button>
             </p>
-          </form>
+          </form> -->
         </div>
       </section>
+
+
+
+<!-- Code for Selecting Filter Option ------------------------------------------------------------- -->
       <div class="album py-5 bg-light">
         <div class="container">
           <div class="row" id='dropdownn'>
@@ -64,12 +68,11 @@
         </div>
       </div>
 
+
+<!-- code for conatiner for video cards -->
       <div class="album py-5 bg-light">
         <div class="container">
           <div class="row" id='accordion'>
-
-
-
           </div>
         </div>
       </div>
@@ -79,14 +82,18 @@
 
     <script>
 
+  // Code for onclick for filter option
       function mysorted(){
         var sortby  = document.getElementById("mySelect").value;
         console.log(sortby);
         getdata(sortby);
       }
 
+  //APi url for fetching data
       const api_url = 'http://127.0.0.1:8000/search/refresh';
 
+
+// Async Function for calling for data at given intervel
       async function getdata(sortby){
         document.getElementById('accordion').innerHTML = "";
         const response = await fetch(api_url,
@@ -97,6 +104,8 @@
 
         printdata(data,sortby);
       }
+
+ // Function for iterating HTML element
       function printdata(data,sortby){
 
         const container = document.getElementById('accordion');
@@ -138,11 +147,13 @@
         });
 
       }
-      getdata();
+
+// Caaling for data--------------
+    getdata();
+
+ // Calling in intervel for 10000 MS---------------------------------
     setInterval(getdata,10000);
-
-
-    </script>
+  </script>
 
 
 </body>
