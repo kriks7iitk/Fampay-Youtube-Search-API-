@@ -8,11 +8,15 @@ from rest_framework.views import APIView
 from fetching_data.models import video_data
 from fetching_data.serializers import video_data_Serializer
 from rest_framework.response import Response
+from rest_framework import generics
+from apscheduler.schedulers.background import BackgroundScheduler
 
 
 # function to render index.html for search---------------------------------------------------------------
-class videos_detail(APIView):
+class videos_detail(generics.ListAPIView):
     def get(self, request, format=None):
+        videos = video_data.objects.all()
+        serializer = video_data_Serializer(videos, many=True)
         return render(request,'dashboard/index.html')
 
 
@@ -21,9 +25,8 @@ class videos_detail(APIView):
 
 #function to return Json Response on get request------------------------------------
 
-class data_interval(APIView):
+class data_interval(generics.ListAPIView):
     def get(self,request):
-        get_data()
         videos = video_data.objects.all()
         serializer = video_data_Serializer(videos, many=True)
         return Response(serializer.data)
@@ -53,7 +56,7 @@ def get_data():
 # getting seaerch vidoe ids---------------------------
     video_ids = []
     r = requests.get(youtube_url,params = search_params)
-    print(r.text)
+    # print(r.text)
     results = r.json()['items']
 
 
@@ -69,6 +72,7 @@ def get_data():
     r = requests.get(video_url,params = video_params)
     results = r.json()['items']
     videos = []
+    # print(results)
 
     for result in results:
         video_data = {
@@ -83,10 +87,16 @@ def get_data():
         serializer = video_data_Serializer(data=video_data)
         if serializer.is_valid():
             serializer.save()
-            # print(serializer.data)
+            print(serializer.data)
             # videos.append(video_data)
 
         # context = {
         #     'videos' : videos
         # }
         # return JsonResponse(context)
+
+def start():
+    print("running")
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(get_data, 'interval', minutes=1)
+    scheduler.start()
