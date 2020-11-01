@@ -3,6 +3,7 @@ import requests
 from django.conf import settings
 from isodate import parse_duration
 from django.http import JsonResponse
+import datetime
 
 
 # function to render index.html for search---------------------------------------------------------------
