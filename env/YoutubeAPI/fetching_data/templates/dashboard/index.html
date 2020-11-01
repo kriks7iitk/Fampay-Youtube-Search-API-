@@ -106,10 +106,9 @@
       }
 
  // Function for iterating HTML element
-      function printdata(data,sortby){
+      function printdata(video_data,sortby){
 
         const container = document.getElementById('accordion');
-        var video_data  = data.videos;
         if(sortby!=undefined){
           if(sortby == 'datetime'){
             video_data.sort(function (a, b) {
@@ -152,7 +151,7 @@
     getdata();
 
  // Calling in intervel for 10000 MS---------------------------------
-    setInterval(getdata,10000);
+    // setInterval(getdata,10000);
   </script>
 
 

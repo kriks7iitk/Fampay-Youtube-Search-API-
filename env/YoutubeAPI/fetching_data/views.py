@@ -4,14 +4,23 @@ from django.conf import settings
 from isodate import parse_duration
 from django.http import JsonResponse
 import datetime
+from fetching_data.models import video_data
+from fetching_data.serializers import video_data_Serializer
+from rest_framework.views import APIView
 
 
 # function to render index.html for search---------------------------------------------------------------
 
-def index(request):
-    if(request.method=='GET'):
+class videos_detail(APIView):
+    def get(request):
         return render(request,'dashboard/index.html')
 
+class data_interval(APIView):
+    def get(request):
+        # get_data()
+        videos = video_data.objects.all()
+        serializer = video_data_Serializer(videos, many=True)
+        return JsonResponse(serializer.data, safe=False)
 
 
 
@@ -19,60 +28,59 @@ def index(request):
 #function to return Json Response on get request------------------------------------
 
 
-def refresh(request):
+def get_data():
 
-    if(request.method == 'GET'):
-        youtube_url = 'https://www.googleapis.com/youtube/v3/search'
-        video_url = 'https://www.googleapis.com/youtube/v3/videos'
+    youtube_url = 'https://www.googleapis.com/youtube/v3/search'
+    video_url = 'https://www.googleapis.com/youtube/v3/videos'
 #paraemters for Youtube Search API---------------------------------------
 
 
 
-        search_params = {
-            'part' : 'snippet',
-            'q' : 'news india hindi',
-            'key': settings.YOUTUBE_DATA_API_KEY,
-            'maxResults': 15,
-            'order' : 'date'
-        }
+    search_params = {
+        'part' : 'snippet',
+        'q' : 'news india hindi',
+        'key': settings.YOUTUBE_DATA_API_KEY,
+        'maxResults': 15,
+        'order' : 'date'
+    }
 
 # getting seaerch vidoe ids---------------------------
-        video_ids = []
-        r = requests.get(youtube_url,params = search_params)
+    video_ids = []
+    r = requests.get(youtube_url,params = search_params)
         # print(r.text)
-        results = r.json()['items']
+    results = r.json()['items']
 
 
-        for result in results:
-            video_ids.append(result['id']['videoId'])
+    for result in results:
+        video_ids.append(result['id']['videoId'])
 # getting  vidoe details from video ids---------------------------
-        d = datetime.datetime.now();
-        d = d.isoformat('T');
+    d = datetime.datetime.now();
+    d = d.isoformat('T');
         # print(d);
-        video_params = {
-            'key' : settings.YOUTUBE_DATA_API_KEY,
-            'part' : 'snippet,contentDetails',
-            'id' : ','.join(video_ids),
-            'publishedAfter' : d,
-        }
-        r = requests.get(video_url,params = video_params)
-        results = r.json()['items']
-        videos = []
+    video_params = {
+        'key' : settings.YOUTUBE_DATA_API_KEY,
+        'part' : 'snippet,contentDetails',
+        'id' : ','.join(video_ids),
+        'publishedAfter' : d,
+    }
+    r = requests.get(video_url,params = video_params)
+    results = r.json()['items']
+    videos = []
 
-        for result in results:
-            video_data = {
-                'title' : result['snippet']['title'],
-                'id': result['id'],
-                'duration' : parse_duration(result['contentDetails']['duration']).total_seconds()//60,
-                'thumbnail' : result['snippet']['thumbnails']['high']['url'],
-                'publishtime' : result['snippet']['publishedAt'],
-                'url' : f'https://www.youtube.com/watch?v={ result["id"] }',
-                'description' : result['snippet']['description']
-                }
-            # print(video_data)
-            videos.append(video_data)
-
-        context = {
-            'videos' : videos
-        }
-        return JsonResponse(context)
+    for result in results:
+        video_dat = {
+            'title' : result['snippet']['title'],
+            'id': result['id'],
+            'duration' : parse_duration(result['contentDetails']['duration']).total_seconds()//60,
+            'thumbnail' : result['snippet']['thumbnails']['high']['url'],
+            'publishtime' : result['snippet']['publishedAt'],
+            'url' : f'https://www.youtube.com/watch?v={ result["id"] }',
+            'description' : result['snippet']['description']
+            }
+        serializer = video_data_Serializer( data=video_dat)
+        if serializer.is_valid():
+            serializer.save()
+            print(serializer.data)
+    #     videos.append(video_dat)
+    #
+    # return videos
