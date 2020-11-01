@@ -7,6 +7,7 @@ import datetime
 from rest_framework.views import APIView
 from fetching_data.models import video_data
 from fetching_data.serializers import video_data_Serializer
+from rest_framework.response import Response
 
 
 # function to render index.html for search---------------------------------------------------------------
@@ -25,7 +26,7 @@ class data_interval(APIView):
         get_data()
         videos = video_data.objects.all()
         serializer = video_data_Serializer(videos, many=True)
-        return JsonResponse(serializer.data)
+        return Response(serializer.data)
 
 
 
@@ -37,7 +38,8 @@ def get_data():
 #paraemters for Youtube Search API---------------------------------------
 
     d = datetime.datetime.now();
-    d = d.isoformat('T');
+    d = d.isoformat('T')+'Z';
+    print(d)
 
     search_params = {
         'part' : 'snippet',
@@ -51,7 +53,7 @@ def get_data():
 # getting seaerch vidoe ids---------------------------
     video_ids = []
     r = requests.get(youtube_url,params = search_params)
-        # print(r.text)
+    print(r.text)
     results = r.json()['items']
 
 
@@ -81,7 +83,7 @@ def get_data():
         serializer = video_data_Serializer(data=video_data)
         if serializer.is_valid():
             serializer.save()
-            print(serializer.data)
+            # print(serializer.data)
             # videos.append(video_data)
 
         # context = {

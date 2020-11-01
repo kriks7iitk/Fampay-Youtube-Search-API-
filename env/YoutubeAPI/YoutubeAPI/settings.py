@@ -125,4 +125,4 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-YOUTUBE_DATA_API_KEY = 'AIzaSyAI0Gle0KzpoE6yy04nvrvcYTPERhCmCts'
+YOUTUBE_DATA_API_KEY = 'AIzaSyAl_ZxyyZIPMxLpohYDw6xq8235TBqXX3E'
