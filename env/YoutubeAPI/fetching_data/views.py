@@ -55,7 +55,7 @@ def refresh(request):
                 'url' : f'https://www.youtube.com/watch?v={ result["id"] }',
                 # 'description' : result['snippet']['description']
                 }
-            print(video_data)
+            # print(video_data)
             videos.append(video_data)
 
         context = {
