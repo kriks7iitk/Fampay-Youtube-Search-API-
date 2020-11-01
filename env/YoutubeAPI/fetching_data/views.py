@@ -25,14 +25,16 @@ def refresh(request):
         video_url = 'https://www.googleapis.com/youtube/v3/videos'
 #paraemters for Youtube Search API---------------------------------------
 
-
+        d = datetime.datetime.now();
+        d = d.isoformat('T');
 
         search_params = {
             'part' : 'snippet',
             'q' : 'news india hindi',
             'key': settings.YOUTUBE_DATA_API_KEY,
             'maxResults': 15,
-            'order' : 'date'
+            'order' : 'date',
+            'publishedAfter' : d
         }
 
 # getting seaerch vidoe ids---------------------------
