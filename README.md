@@ -18,6 +18,18 @@ Task Not completed :
 1 - List of API keys in case quota complete (Bnous Task)
 
 
+## APIs  - 
+
+Video_list Class(ListAPIview) to list all the video data pagianted by 10   - -url = http://127.0.0.1:8000/search/videolis
+
+Video_detail Class API to render dashboard html page   -URL  =   http://127.0.0.1:8000/search/
+
+Data_Interval Claas(LIstview API) to refresh the data on dashboard at given intervel  -url  = http://127.0.0.1:8000/search/refresh
+
+def get_data()   -  Call in givnen Interval from server side to fetch data in evry one min
+def start()    -  utility function to update data   ----used in AppConfig
+
+
 ## Instruction
 
 
