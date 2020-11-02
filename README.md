@@ -20,7 +20,7 @@ Task Not completed :
 
 ## APIs  - 
 
-Video_list Class(ListAPIview) to list all the video data pagianted by 10   - -url = http://127.0.0.1:8000/search/videolist  -- ------GET API to get all object
+Video_list Class(ListAPIview) to list all the video data pagianted by 1   - -url = http://127.0.0.1:8000/search/videolist  -- ------GET API to get all object
 
 Video_detail Class API to render dashboard html page   -URL  =   http://127.0.0.1:8000/search/
 
