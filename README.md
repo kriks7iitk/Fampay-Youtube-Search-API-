@@ -37,7 +37,7 @@ def start()    -  utility function to update data   ----used in AppConfig
 Before opening make sure that python is installed on your PC
 Given project is done using Django Framework and Frontend side development is done using JS,HTML and CSS
 
-----Everything is done is to make easy for other user to open and run website easily without adding extra libraries .so please activate virtual environment before running App---
+----Everything is done in virtual environment is to make easy for other user to open and run website easily without adding extra libraries .so please activate virtual environment before running App---
 
 
 Step 1 : Go to Master Branch
