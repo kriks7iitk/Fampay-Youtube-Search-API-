@@ -20,7 +20,7 @@ class videos_list(generics.ListAPIView):
     paginate_by = 1
     def get_queryset(self):
         queryset = self.model.objects.all()
-        return queryset.order_by('publishtime')
+        return queryset.order_by('-publishtime')
 
 
 # function to render index.html for search---------------------------------------------------------------
@@ -37,7 +37,7 @@ class videos_detail(generics.ListAPIView):
 
 class data_interval(generics.ListAPIView):
     def get(self,request):
-        videos = video_data.objects.all()
+        videos = video_data.objects.all().order_by('-publishtime')
         serializer = video_data_Serializer(videos, many=True)
         return Response(serializer.data)
 
