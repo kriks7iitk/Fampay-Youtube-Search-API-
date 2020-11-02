@@ -37,7 +37,7 @@ class videos_detail(generics.ListAPIView):
 
 class data_interval(generics.ListAPIView):
     def get(self,request):
-        videos = video_data.objects.all().order_by('-publishtime')
+        videos = video_data.objects.all().order_by('-publishtime')[:15]
         serializer = video_data_Serializer(videos, many=True)
         return Response(serializer.data)
 
