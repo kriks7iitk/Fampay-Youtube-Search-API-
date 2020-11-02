@@ -3,15 +3,15 @@
 
 Task completed:
 
-1 - Make API to fetch data using Youtube API
+1 - Make API to fetch data using Youtube API in given intervel(1 min) from server side
 
-2 - Make API to give Json Response for desired querry
+2 - Make GET API Views to give Json Response for desired querry in paginated response
 
-3 - Make JS function to  request data in given intervel
+3 - Make JS function to  request data in given intervel from server in client side
 
 4 - Make Dashboard to view videos album(Bonus Task)
 
-5 - Added filter option to filter data based on date-time or duration of videos(Bonus Task)
+5 - Added filter option to filter data based on date-time or duration of videos(Bonus Task)-----(done in frontend)
 
 Task Not completed :
 
