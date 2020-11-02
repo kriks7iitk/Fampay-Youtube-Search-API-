@@ -17,7 +17,7 @@ class videos_list(generics.ListAPIView):
     serializer_class = video_data_Serializer
     model = serializer_class.Meta.model
     pagination_class = PageNumberPagination
-    paginate_by = 10
+    paginate_by = 1
     def get_queryset(self):
         queryset = self.model.objects.all()
         return queryset.order_by('publishtime')
