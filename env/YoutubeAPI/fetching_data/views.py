@@ -10,13 +10,23 @@ from fetching_data.serializers import video_data_Serializer
 from rest_framework.response import Response
 from rest_framework import generics
 from apscheduler.schedulers.background import BackgroundScheduler
+from rest_framework.pagination import PageNumberPagination
+
+
+class videos_list(generics.ListAPIView):
+    serializer_class = video_data_Serializer
+    model = serializer_class.Meta.model
+    pagination_class = PageNumberPagination
+    paginate_by = 10
+    def get_queryset(self):
+        queryset = self.model.objects.all()
+        return queryset.order_by('publishtime')
 
 
 # function to render index.html for search---------------------------------------------------------------
 class videos_detail(generics.ListAPIView):
     def get(self, request, format=None):
-        videos = video_data.objects.all()
-        serializer = video_data_Serializer(videos, many=True)
+
         return render(request,'dashboard/index.html')
 
 
