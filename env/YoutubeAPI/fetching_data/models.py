@@ -9,4 +9,4 @@ class video_data(models.Model):
     thumbnail = models.CharField(default='', max_length=10000)
     url = models.CharField( default='', max_length=100000)
     class Meta:
-        ordering = ['publishtime']
+        ordering = ['-publishtime']
