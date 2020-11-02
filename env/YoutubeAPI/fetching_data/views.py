@@ -50,7 +50,7 @@ def get_data():
     video_url = 'https://www.googleapis.com/youtube/v3/videos'
 #paraemters for Youtube Search API---------------------------------------
 
-    d = datetime.datetime.now();
+    d = datetime.datetime.now()-datetime.timedelta(minutes = 5);
     d = d.isoformat('T')+'Z';
     print(d)
 
